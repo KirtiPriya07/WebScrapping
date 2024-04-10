@@ -30,7 +30,7 @@ def Selenium_extractor():
 
         if len(a) == var:
             le+=1
-            if le > 20:
+            if le > 5:
                 break
         else:
             le = 0
@@ -48,34 +48,18 @@ def Selenium_extractor():
             Name_Html = soup.findAll('div', {"class": "qBF1Pd fontHeadlineSmall"})
 
             name = Name_Html[0].text
-            print( "try B", name)
             if name not in e:
                 e.append(name)
                 divs = soup.findAll('span', {"class": "UsdlK"})
-                for j in range(len(divs)):
-                    if str(divs[j].text)[0] == "+":
-                        phone = divs[j].text
 
-                 #for div in soup.findAll('div', {"class":"W4Efsd"}):
-                  #  if div.children == 'span':
-                  #      address= div.children.text
-                #address_divs = soup.findAll('div', {"class":"W4Efsd"})
-                #print("find", address_divs)
-                # Address_Html= address_divs[0]
-                # address=Address_Html.text
-                address = "temprorary"
-                
-                website_a = soup.findAll('a', {"class" :"lcr4fd S9kvJb "})
-                print("find web", website_a)
-                try:
-                    for z in range(len(website_a)):
-                        if str(website_a[z].text)[-4] == "." or str(website_a[z].text)[-3] == ".":
-                            website = website_a[z].text
-                except:
-                    website="Not available"
-                print([name,phone,address,website])
-                record.append((name,phone,address,website))
-                df=pd.DataFrame(record,columns=['Name','Phone number','Address','Website'])  # writing data to the file
+               
+                review_span = soup.findAll('span', {"class", "ZkP5Je"})
+                review = review_span[0].text
+
+
+
+                record.append((name,review))
+                df=pd.DataFrame(record,columns=['Name','Review'])  # writing data to the file
                 df.to_csv(filename + '.csv',index=False,encoding='utf-8')
         except:
             print("error")
